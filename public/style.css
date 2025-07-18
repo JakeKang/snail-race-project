@@ -1,0 +1,400 @@
+:root {
+  --background: #f8f9fa;
+  --foreground: #212529;
+  --card: #ffffff;
+  --card-foreground: #212529;
+  --primary: #007bff;
+  --primary-foreground: #ffffff;
+  --secondary: #e9ecef;
+  --secondary-foreground: #343a40;
+  --muted: #f1f3f5;
+  --muted-foreground: #868e96;
+  --border: #dee2e6;
+  --ring: #80bdff;
+  --radius: 0.5rem;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Noto Sans KR', sans-serif;
+  margin: 0;
+  padding: 1rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* --- 로비 스타일 --- */
+#lobby-view {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 5vh;
+}
+.lobby-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.lobby-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.lobby-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.room-creation-area {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.room-list-area h2 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+#room-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+.room-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.room-item:hover {
+  background-color: var(--muted);
+  border-color: var(--ring);
+}
+.room-item-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.room-item-players {
+  font-size: 1rem;
+  color: var(--muted-foreground);
+  font-weight: 700;
+}
+
+/* --- 게임방 스타일 (기존 코드와 유사) --- */
+#event-banner {
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 0 0 1rem 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  z-index: 1000;
+  text-align: center;
+  transition: top 0.5s ease-in-out;
+}
+#event-banner.show {
+  top: 0;
+}
+
+.container {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+.sidebar {
+  width: 340px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+header {
+  text-align: center;
+}
+header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+#race-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 0.5rem;
+  background-color: var(--secondary);
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+}
+#race-info p {
+  margin: 0;
+}
+#countdown {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--primary);
+  margin-left: 0.5rem;
+}
+
+#race-track {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+#race-canvas {
+  background-color: #f0fdf4;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+.card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.betting-card {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+}
+#betting-area,
+#odds-area {
+  flex: 1;
+}
+
+.betting-controls,
+.nickname-setter,
+.chat-input-area {
+  display: flex;
+  gap: 0.75rem;
+}
+input[type='text'],
+input[type='number'],
+select {
+  flex-grow: 1;
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  font-size: 1rem;
+  min-width: 0;
+}
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+button {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+#leave-room-btn {
+  background-color: #6c757d;
+}
+button:hover {
+  filter: brightness(1.1);
+}
+button:disabled {
+  filter: brightness(0.9);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+#odds-list,
+#leaderboard {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+#odds-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+#odds-list li:last-child {
+  border-bottom: none;
+}
+.odds-value {
+  font-weight: 700;
+}
+
+#leaderboard {
+  gap: 0.75rem;
+}
+#leaderboard li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-radius: calc(var(--radius) - 2px);
+}
+#leaderboard li.my-rank {
+  background-color: #e7f1ff;
+  border: 1px solid var(--primary);
+}
+#leaderboard .leaderboard-rank {
+  font-weight: 700;
+  width: 20px;
+  color: var(--primary);
+}
+#leaderboard .leaderboard-name {
+  flex-grow: 1;
+  margin-left: 1rem;
+}
+#leaderboard .leaderboard-points {
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.chat-card {
+  flex-grow: 1;
+}
+#chat-messages {
+  height: 250px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.chat-message {
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius);
+  max-width: 90%;
+  word-break: break-word;
+}
+.chat-message .nickname {
+  font-weight: 700;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.system-message {
+  background-color: var(--secondary);
+  align-self: center;
+  text-align: center;
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+.my-message {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  align-self: flex-end;
+}
+.my-message .nickname {
+  color: var(--primary-foreground);
+  opacity: 0.8;
+}
+.other-message {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  color: var(--secondary-foreground);
+  align-self: flex-start;
+}
+
+@media (max-width: 1024px) {
+  body {
+    padding: 1rem;
+  }
+  .lobby-container {
+    padding: 1rem;
+  }
+  .container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+  }
+  header h1 {
+    font-size: 1.75rem;
+  }
+  .card {
+    padding: 1rem;
+  }
+  .betting-card {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  #race-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #event-banner {
+    font-size: 1.1rem;
+    padding: 0.8rem 1rem;
+  }
+}
+#my-bet-status {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+#my-bet-status h4 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+#my-bet-status p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--primary);
+}

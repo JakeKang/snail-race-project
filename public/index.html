@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>달팽이 경마 프로젝트</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="lobby-view">
+      <div class="lobby-container">
+        <header class="lobby-header">
+          <h1>달팽이 경마 로비</h1>
+          <p>참여할 게임방을 선택하거나 새로운 방을 만들어보세요.</p>
+        </header>
+
+        <div class="room-creation-area">
+          <input
+            type="text"
+            id="room-name-input"
+            placeholder="새로운 방 이름 (2-10자)"
+          />
+          <button id="create-room-btn">방 만들기</button>
+        </div>
+
+        <div class="room-list-area">
+          <h2>게임방 목록</h2>
+          <ul id="room-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="game-view" class="hidden">
+      <div id="event-banner"></div>
+      <div class="container">
+        <main class="main-content">
+          <header>
+            <h1 id="header-room-name"></h1>
+            <div id="race-info">
+              <p id="race-status-container">
+                <span id="race-status-text">다음 경주까지</span
+                ><span id="countdown">20</span>
+              </p>
+              <p id="weather-info">
+                날씨: <span id="weather-icon">❓</span>
+                <span id="weather-text">측정 중...</span>
+              </p>
+            </div>
+          </header>
+          <div id="race-track">
+            <canvas id="race-canvas" width="900" height="500"></canvas>
+          </div>
+          <div class="card betting-card">
+            <div id="betting-area">
+              <h3>베팅하기</h3>
+              <div class="betting-controls">
+                <select id="snail-select"></select>
+                <input
+                  type="number"
+                  id="bet-amount"
+                  placeholder="베팅 포인트"
+                />
+                <button id="bet-button">베팅!</button>
+              </div>
+              <div id="my-bet-status" class="hidden">
+                <h4>나의 베팅</h4>
+                <p id="my-bet-text"></p>
+              </div>
+            </div>
+            <div id="odds-area">
+              <h3>실시간 배당률</h3>
+              <ul id="odds-list"></ul>
+            </div>
+          </div>
+        </main>
+
+        <aside class="sidebar">
+          <div class="card">
+            <h3>내 정보</h3>
+            <div class="nickname-setter">
+              <input type="text" id="nickname-input" placeholder="닉네임" />
+              <button id="nickname-button">변경</button>
+            </div>
+            <p>내 포인트: <span id="my-points">1000</span> P</p>
+            <button id="leave-room-btn">로비로 돌아가기</button>
+          </div>
+          <div class="card">
+            <h3>참가자 및 순위</h3>
+            <ul id="leaderboard"></ul>
+          </div>
+          <div class="card chat-card">
+            <h3>채팅</h3>
+            <div id="chat-messages"></div>
+            <div class="chat-input-area">
+              <input type="text" id="chat-input" placeholder="메시지 입력..." />
+              <button id="chat-button">전송</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="client.js"></script>
+  </body>
+</html>
