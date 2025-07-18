@@ -68,36 +68,40 @@ function runRaceFrame(roomId, rooms, io) {
   for (let i = 0; i < SNAILS.length; i++) {
     if (raceState.positions[i] >= RACE_DISTANCE) continue;
 
-    // 밸런스 조정: 기본 속도 범위를 약간 낮춰 전체적인 속도를 늦춥니다.
-    let baseSpeed = Math.random() * 1.2 + 0.2; // 0.2 ~ 1.4 범위
+    // 대규모 밸런스 조정: 기본 속도의 랜덤 범위를 0.2 ~ 1.8로 대폭 확장
+    let baseSpeed = 0.2 + Math.random() * 1.6;
     const snail = SNAILS[i];
 
-    // 밸런스 조정: 순간 가속 확률 및 배율 조정
-    if (Math.random() < 0.025) {
-      baseSpeed *= 1.5; // 순간 가속 배율을 1.5로 조정
+    // 대규모 밸런스 조정: 순간 가속 확률(4%) 및 배율(2배)을 크게 높여 변수 창출
+    if (Math.random() < 0.04) {
+      baseSpeed *= 2.0;
     }
 
-    // 특성 적용 (밸런스 조정)
+    // 대규모 밸런스 조정: 특성이 속도를 결정하지 않고, '보정'하는 역할로 변경
     switch (snail.trait) {
       case 'STEADY':
-        baseSpeed = 1.15;
+        // '꾸준함': 랜덤으로 나온 속도가 너무 높거나 낮으면 평균(1.0) 쪽으로 살짝 당겨줍니다.
+        baseSpeed = (baseSpeed + 1.0) / 2;
         break;
       case 'SPRINTER':
-        if (raceState.positions[i] < 30) baseSpeed *= 1.7;
+        // '초반 스퍼트': 초반에 속도를 곱하는 대신, 추가 속도를 '더해줍니다'.
+        if (raceState.positions[i] < 30) baseSpeed += 0.5;
         break;
       case 'RAIN_LOVER':
-        if (raceState.weather === '비') baseSpeed *= 1.5;
+        // '진흙길의 강자': 비가 오면 추가 속도를 '더해줍니다'.
+        if (raceState.weather === '비') baseSpeed += 0.4;
         break;
       case 'INTIMIDATOR':
+        // '위압감': 주변에 영향을 주는 고유 특성은 유지
         if (Math.random() < 0.08) {
           for (let j = 0; j < SNAILS.length; j++) {
-            if (i !== j) raceState.positions[j] -= 0.04;
+            if (i !== j) raceState.positions[j] -= 0.05;
           }
         }
         break;
     }
 
-    // 이벤트 효과 적용 (밸런스 조정)
+    // 이벤트 효과 적용 (기존과 동일)
     if (raceState.event) {
       const eventEffect = raceState.event.effect;
       const affectedSnails = [];
